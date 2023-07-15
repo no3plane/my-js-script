@@ -1,3 +1,17 @@
+// ==UserScript==
+// @name         B站直播快捷键
+// @version      0.1
+// @description  给B站直播的全屏、网页全屏、弹幕添加快捷键L、W、D
+// @author       LG
+// @include      /https?:\/\/live\.bilibili\.com\/\d+\??.*/
+// @include      /https?:\/\/live\.bilibili\.com\/(blanc\/)?\d+\??.*/
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    liveKeyMapping();
+})();
 
 function liveKeyMapping() {
     /* L -> Fullscreen */
@@ -28,12 +42,13 @@ function normalKeyMapping() {
     }, true);
 }
 
+// TODO L与Ctrl+L冲突，解决一下
 function showPlayerController() {
     let player = document.querySelector("#live-player");
-    if (!player) {
+    if(!player) {
         throw new Error("cannot find player");
     }
-    let event = new MouseEvent('mousemove', {
+    let event = new MouseEvent("mousemove", {
         screenX: 579,
         screenY: 460,
         clientX: 579,
@@ -50,5 +65,5 @@ function bindKey(keycode, handler, stopPropagation = false) {
                 e.stopImmediatePropagation();
             }
         }
-    })
+    });
 }
