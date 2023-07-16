@@ -1,6 +1,6 @@
 import time
 from ProcRow import ProcRow
-from Printer import Printer
+from ConsolePrinter import ConsolePrinter
 
 
 def getSelectedRow():
@@ -30,11 +30,10 @@ def main():
     selectedRow = getSelectedRow()
     interval = getRefreshInterval()
 
-    printer = Printer(selectedRow)
-    printer.printTitle()
+    printer = ConsolePrinter()
 
     while True:
-        printer.printValue()
+        printer.print(selectedRow.getCols())
         time.sleep(interval / 1000)
         if selectedRow.isExists() == False:
             print("进程项已不存在")
