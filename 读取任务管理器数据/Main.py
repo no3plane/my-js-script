@@ -1,4 +1,5 @@
 import time
+import sys
 from ProcRow import ProcRow
 from ConsolePrinter import ConsolePrinter
 
@@ -20,24 +21,37 @@ def getRefreshInterval():
     while True:
         interval = input("请输入信息刷新间隔（单位ms，缺省值为1000）：") or "1000"
         try:
-            interval = int(interval)
-            return interval
+            return int(interval) / 1000
         except ValueError:
             print("请输入一个整数")
+
+
+def sleep(interval):
+    if "GraphPrinter" in sys.modules:
+        import matplotlib.pyplot as plt
+
+        plt.pause(interval)
+    else:
+        time.sleep(interval)
 
 
 def main():
     selectedRow = getSelectedRow()
     interval = getRefreshInterval()
+    printers = [ConsolePrinter()]
 
-    printer = ConsolePrinter()
+    # 取消注释，可以显示折线图。但渲染折线图性能开销太大，不建议使用。不知道除了matplotlib外，有没有更好的渲染方案。
+    # from GraphPrinter import GraphPrinter
+    # printers = [GraphPrinter(), ConsolePrinter()]
 
     while True:
-        printer.print(selectedRow.getCols())
-        time.sleep(interval / 1000)
         if selectedRow.isExists() == False:
             print("进程项已不存在")
             return
+        cols = selectedRow.getCols()
+        for printer in printers:
+            printer.print(cols)
+        sleep(interval)
 
 
 if __name__ == "__main__":
