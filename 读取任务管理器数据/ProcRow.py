@@ -5,7 +5,9 @@ from uiautomation import TreeItemControl, EditControl
 class ProcRow:
     def __init__(self, row: TreeItemControl):
         self._rawRow = row
-        self._rawColContainer = self._rawRow.PaneControl(searchDepth=1, Automation="TmViewRow")
+        self._rawColContainer = self._rawRow.PaneControl(
+            searchDepth=1, Automation="TmViewRow"
+        )
 
     @staticmethod
     def getProcRows():
@@ -14,7 +16,6 @@ class ProcRow:
             ui.WindowControl(searchDepth=1, ClassName="TaskManagerWindow")
             .PaneControl(searchDepth=1, Name="TaskManagerMain")
             .DataGridControl(searchDepth=4, AutomationId="ScrollViewer")
-            .GroupControl(searchDepth=1, AutomationId="TmGroupHeader_Apps")
         )
         for child in procTable.GetChildren():
             if child.ControlTypeName == "GroupControl":
