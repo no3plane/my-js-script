@@ -15,17 +15,17 @@
 
 function liveKeyMapping() {
     /* L -> Fullscreen */
-    bindKey(76, () => {
+    bindKey('l', () => {
         showPlayerController();
         document.querySelector(".control-area > .right-area > div:nth-child(1) > div > span").click();
     });
     /* W -> webFullscreen */
-    bindKey(87, () => {
+    bindKey('w', () => {
         showPlayerController();
         document.querySelector(".control-area > .right-area > div:nth-child(2) > div > span").click();
     }, true);
     /* D -> toggleDanmaku */
-    bindKey(68, () => {
+    bindKey('d', () => {
         showPlayerController();
         document.querySelector(".control-area > .right-area > div:nth-child(4) > div > span").click();
     });
@@ -33,16 +33,15 @@ function liveKeyMapping() {
 
 function normalKeyMapping() {
     /* L -> Fullscreen */
-    bindKey(76, () => {
+    bindKey('l', () => {
         document.querySelector(".bpx-player-ctrl-full").click();
     });
     /* W -> webFullscreen */
-    bindKey(87, () => {
+    bindKey('w', () => {
         document.querySelector(".bpx-player-ctrl-web").click();
     }, true);
 }
 
-// TODO L与Ctrl+L冲突，解决一下
 function showPlayerController() {
     let player = document.querySelector("#live-player");
     if(!player) {
@@ -57,9 +56,9 @@ function showPlayerController() {
     player.dispatchEvent(event);
 }
 
-function bindKey(keycode, handler, stopPropagation = false) {
+function bindKey(key, handler, stopPropagation = false) {
     document.addEventListener("keydown", (e) => {
-        if (e.keyCode === keycode) {
+        if (e.key === key && !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey) {
             handler(e);
             if (stopPropagation) {
                 e.stopImmediatePropagation();
