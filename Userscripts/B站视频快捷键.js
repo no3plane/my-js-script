@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         B站直播快捷键
+// @name         B站视频快捷键
 // @version      0.3
-// @description  给B站直播的全屏、网页全屏、弹幕添加快捷键L、W、D
+// @description  给B站直播和视频的全屏、网页全屏、弹幕添加快捷键L、W、D
 // @author       LG
 // @match        https://www.bilibili.com/video/*
 // @match        https://www.bilibili.com/bangumi/*
