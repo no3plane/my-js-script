@@ -1,16 +1,36 @@
 // ==UserScript==
 // @name         B站直播快捷键
-// @version      0.1
+// @version      0.2
 // @description  给B站直播的全屏、网页全屏、弹幕添加快捷键L、W、D
 // @author       LG
-// @include      /https?:\/\/live\.bilibili\.com\/\d+\??.*/
-// @include      /https?:\/\/live\.bilibili\.com\/(blanc\/)?\d+\??.*/
+// @match        https://www.bilibili.com/video/*
+// @match        https://www.bilibili.com/bangumi/*
+// @include      https://live.bilibili.com/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
-    liveKeyMapping();
+    const liveURLMatcher = [
+        /^https?:\/\/live\.bilibili\.com\/\d+\??.*$/,
+        /^https?:\/\/live\.bilibili\.com\/(blanc\/)?\d+\??.*$/
+    ];
+    const videoURLMatcher = [
+        /^https?:\/\/www\.bilibili\.com\/video\/.*$/,
+        /^https?:\/\/www\.bilibili\.com\/bangumi\/.*$/
+    ];
+    liveURLMatcher.forEach((matcher) => {
+        if(matcher.test(location.href)) {
+            liveKeyMapping();
+            return;
+        }
+    });
+    videoURLMatcher.forEach((matcher) => {
+        if(matcher.test(location.href)) {
+            videoKeyMapping();
+            return;
+        }
+    });
 })();
 
 function liveKeyMapping() {
@@ -31,7 +51,7 @@ function liveKeyMapping() {
     });
 }
 
-function normalKeyMapping() {
+function videoKeyMapping() {
     /* L -> Fullscreen */
     bindKey('l', () => {
         document.querySelector(".bpx-player-ctrl-full").click();
